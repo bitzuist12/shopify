@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Custom Item Creator</title>
+  <link href="style.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h2 class="option-heading">Select your base item:</h2>
+        <ul class="option-list" id="base-options">
+          <li class="option-item" data-base="Cardigan">Cardigan</li>
+          <li class="option-item" data-base="Shirt">Shirt</li>
+          <li class="option-item" data-base="Jacket">Jacket</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h2 class="option-heading">Select your pattern:</h2>
+        <ul class="option-list" id="pattern-options">
+          <li class="option-item" data-pattern="Stripes">Stripes</li>
+          <li class="option-item" data-pattern="Traditional">Traditional</li>
+          <li class="option-item" data-pattern="Other">Other</li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h2 class="option-heading">Select your color:</h2>
+        <ul class="option-list" id="color-options">
+          <li class="option-item" data-color="Red">Red</li>
+          <li class="option-item" data-color="Blue">Blue</li>
+          <li class="option-item" data-color="White">White</li>
+          <li class="option-item" data-color="Yellow">Yellow</li>
+          <li class="option-item" data-color="Green">Green</li>
+          <li class="option-item" data-color="Other">Other</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Select your gender:</h2>
+        <label for="male">Male</label>
+        <input type="radio" name="gender" id="male" value="male">
+        <label for="female">Female</label>
+        <input type="radio" name="gender" id="female" value="female">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Select your age:</h2>
+        <input type="number" name="age" id="age">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Preview your custom item:</h2>
+        <img src="https://via.placeholder.com/150" alt="Custom item preview" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <h2>Your custom item:</h2>
+        <p id="custom-item-sentence"></p>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <h2>Related products:</h2>
+      <div id="related-products"></div>
+    </div>
+  </div>
+  
+  <script>
+    var optionItems;
+    
+    var optionLists
+// Define the Shopify API endpoint
+var shop = "smyrnacollective.myshopify.com";
+var apikey = "e65ab753daa53f418b031dceeda53b2b";
+var password = "51ceeffba2810e62e8ceaab66fd27dfd";
+var endpoint = "https://" + apikey + ":" + password + "@" + shop + "/admin/api/2021-07";
+
+// Find the Cardigan option element
+var cardiganOption = document.querySelector('li[data-base="Cardigan"]');
+
+// Add a click event listener to the Cardigan option element
+cardiganOption.addEventListener('click', function() {
+  // Fetch the Cardigan products from Shopify
+  fetch(endpoint + "/products.json?tags=Cardigan&limit=3")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // Create an HTML string for the Cardigan products
+      var productsHtml = "";
+      data.products.forEach(function(product) {
+        var imageUrl = product.images[0].src;
+        var productUrl = "/products/" + product.handle;
+        var title = product.title;
+        var price = product.variants[0].price;
+        productsHtml += `
+          <div class="cardigan-product">
+            <a href="${productUrl}">
+              <img src="${imageUrl}" alt="${title}" />
+              <h3>${title}</h3>
+              <p>${price}</p>
+            </a>
+          </div>
+        `;
+      });
+      // Set the HTML of the cardigan-products div to the productsHtml string
+      var cardiganProductsDiv = document.querySelector('#cardigan-products');
+      cardiganProductsDiv.innerHTML = productsHtml;
+    });
+});
+
+// Find the Shirt option element
+var shirtOption = document.querySelector('li[data-base="Shirt"]');
+
+// Add a click event listener to the Shirt option element
+shirtOption.addEventListener('click', function() {
+  // Fetch the Shirt products from Shopify
+  fetch(endpoint + "/products.json?tags=Shirt&limit=3")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // Create an HTML string for the Shirt products
+      var productsHtml = "";
+      data.products.forEach(function(product) {
+        var imageUrl = product.images[0].src;
+        var productUrl = "/products/" + product.handle;
+        var title = product.title;
+        var price = product.variants[0].price;
+        productsHtml += `
+          <div class="shirt-product">
+            <a href="${productUrl}">
+              <img src="${imageUrl}" alt="${title}" />
+              <h3>${title}</h3>
+              <p>${price}</p>
+            </a>
+          </div>
+        `;
+      });
+      // Set the HTML of the shirt-products div to the productsHtml string
+      var shirtProductsDiv = document.querySelector('#shirt-products');
+      shirtProductsDiv.innerHTML = productsHtml;
+    });
+});
+
+// Find the Jacket option element
+var jacketOption = document.querySelector('li[data-base="Jacket"]');
+
+// Add a click event listener to the Jacket option element
+jacketOption.addEventListener('click', function() {
+  // Fetch the Jacket products from Shopify
+  fetch(endpoint + "/products.json?tags=Jacket&limit=3")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // Create an HTML string for the Jacket products
+      var productsHtml = "";
+      data.products.forEach(function(product) {
+        var imageUrl = product.images[0
+// Find the Shirt option element
+var shirtOption = document.querySelector('li[data-base="Shirt"]');
+
+// Add a click event listener to the Shirt option element
+shirtOption.addEventListener('click', function() {
+  // Fetch the Shirt products from Shopify
+  fetch(endpoint + "/products.json?tags=Shirt&limit=3")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // Create an HTML string for the Shirt products
+      var productsHtml = "";
+      data.products.forEach(function(product) {
+        var imageUrl = product.images[0].src;
+        var productUrl = "/products/" + product.handle;
+        var title = product.title;
+        var price = product.variants[0].price;
+        productsHtml += `
+          <div class="shirt-product">
+            <a href="${productUrl}">
+              <img src="${imageUrl}" alt="${title}" />
+              <h3>${title}</h3>
+              <p>${price}</p>
+            </a>
+          </div>
+        `;
+      });
+      // Set the HTML of the shirt-products div to the productsHtml string
+      var shirtProductsDiv = document.querySelector('#shirt-products');
+      shirtProductsDiv.innerHTML = productsHtml;
+    });
+});
+
+// Find the Jacket option element
+var jacketOption = document.querySelector('li[data-base="Jacket"]');
+
+// Add a click event listener to the Jacket option element
+jacketOption.addEventListener('click', function() {
+  // Fetch the Jacket products from Shopify
+  fetch(endpoint + "/products.json?tags=Jacket&limit=3")
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(data) {
+      // Create an HTML string for the Jacket products
+      var productsHtml = "";
+      data.products.forEach(function(product) {
+        var imageUrl = product.images[0].src;
+        var productUrl = "/products/" + product.handle;
+        var title = product.title;
+        var price = product.variants[0].price;
+        productsHtml += `
+          <div class="jacket-product">
+            <a href="${productUrl}">
+              <img src="${imageUrl}" alt="${title}" />
+              <h3>${title}</h3>
+              <p>${price}</p>
+            </a>
+          </div>
+        `;
+      });
+      // Set the HTML of the jacket-products div to the productsHtml string
+      var jacketProductsDiv = document.querySelector('#jacket-products');
+      jacketProductsDiv.innerHTML = productsHtml;
+    });
+});
+
+// Show the related products
+var relatedProductsDiv = document.querySelector('#related-products');
+relatedProductsDiv.innerHTML = '<h3>Related Products:</h3><div id="cardigan-products" class="cardigan-products-container"></div><div id="shirt-products" class="shirt-products-container"></div><div id="jacket-products" class="jacket-products-container"></div>';
+
+// Hide the related products when no base item is selected
+var baseOptions = document.querySelector('#base-options');
+baseOptions.addEventListener('click', function() {
+  var selectedBase = document.querySelector('#base-options .selected').getAttribute('data-base');
+  var relatedProductsDiv = document.querySelector('#related-products');
+  
+  if (selectedBase === "Cardigan") {
+    // Show the Cardigan products
+    var cardiganProductsDiv = document.querySelector('#cardigan-products');
+    cardiganProductsDiv.style.display = 'block';
+    var shirtProductsDiv = document.querySelector('#shirt-products');
+    shirtProductsDiv.style.display = 'none';
+    var jacketProductsDiv = document.querySelector('#jacket-products');
+    jacketProductsDiv.style.display = 'none
+// Function to create a new paragraph element
+function createParagraph(text) {
+  var p = document.createElement('p');
+  p.textContent = text;
+  return p;
+}
+
+// Add a click event listener to the "Create custom item" button
+var createButton = document.querySelector('#create-button');
+createButton.addEventListener('click', function() {
+  // Get the custom item sentence
+  var customItemSentence = document.querySelector('#custom-item-sentence').textContent;
+
+  // Create a new paragraph element
+  var newParagraph = createParagraph(customItemSentence);
+
+  // Add the new paragraph element to the document body
+  var customItemContainer = document.querySelector('#custom-item-container');
+  customItemContainer.appendChild(newParagraph);
+});
+</script>
+</body>
+</html>
